@@ -1,0 +1,14 @@
+# 数据与权重不进仓库
+data/
+checkpoints/
+*.onnx
+*.pth
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# 系统
+.DS_Store

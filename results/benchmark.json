@@ -1,0 +1,31 @@
+{
+  "threads": 1,
+  "batch_sizes": {
+    "1": {
+      "torch": {
+        "median_ms": 1.71,
+        "p90_ms": 1.89,
+        "runs": 50
+      },
+      "onnxruntime": {
+        "median_ms": 1.07,
+        "p90_ms": 1.16,
+        "runs": 50
+      },
+      "speedup": 1.6
+    },
+    "32": {
+      "torch": {
+        "median_ms": 60.57,
+        "p90_ms": 61.37,
+        "runs": 50
+      },
+      "onnxruntime": {
+        "median_ms": 36.95,
+        "p90_ms": 37.27,
+        "runs": 50
+      },
+      "speedup": 1.64
+    }
+  }
+}
