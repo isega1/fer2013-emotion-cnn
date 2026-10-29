@@ -88,6 +88,21 @@ def plot_confusion(matrix: np.ndarray, path: Path, title: str) -> None:
     plt.close(fig)
 
 
+def _display_path(path: Path) -> str:
+    """Repo-relative when the file lives in the repo, absolute otherwise.
+
+    Checkpoints normally sit in ``checkpoints/``, but a path outside the repo is
+    legitimate (a release download into ``/tmp``, an experiment directory), and
+    ``Path.relative_to`` raises instead of falling back.
+    """
+    if not path.is_absolute():
+        return str(path)
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint", type=Path, default=ROOT / "checkpoints/model_epoch_10.pth")
@@ -109,7 +124,7 @@ def main() -> None:
     labels, logits = collect_predictions(model, loader, torch.device(args.device))
     metrics = summarize(labels, logits)
     metrics.update({
-        "checkpoint": str(args.checkpoint.relative_to(ROOT)) if args.checkpoint.is_absolute() else str(args.checkpoint),
+        "checkpoint": _display_path(args.checkpoint),
         "split": str(args.split),
         "parameters": params,
     })
