@@ -162,12 +162,16 @@ These are stated up front because they bound what the numbers mean.
 
 1. **The checkpoints are release assets, not tracked files.** `checkpoints/`
    is gitignored, so a fresh clone has no weights until
-   `gh release download v1.0-checkpoints -D checkpoints` is run. The release
-   is what backs each row of the table above: `cnn40-official_best.pth`
-   (63.81%), `cnn40-legacy_best.pth` (63.95%), `model_epoch_10.pth` (63.39%),
-   `model_epoch_5.pth` (59.43%). `scripts/reproduce_published.sh` verifies
-   whichever of them are present and names the ones that are not, so a partial
-   download still checks what it can.
+   `gh release download v1.0-checkpoints -D checkpoints` is run. Two of the
+   four rows are backed by the release today: `model_epoch_10.pth` (63.39%)
+   and `model_epoch_5.pth` (59.43%). The two 40-epoch checkpoints
+   (`cnn40-official_best.pth`, `cnn40-legacy_best.pth`) have to be re-exported
+   from the training machine: the copies on hand load fine but evaluate to
+   64.86% on the official test set rather than the recorded 63.81%, so they are
+   not the weights behind the table and publishing them would break
+   reproduction instead of enabling it. `scripts/reproduce_published.sh`
+   verifies whichever checkpoints are present and names the ones that are not,
+   so a partial download still checks what it can.
 2. **The legacy split leaks identities, and here is the size of it.**
    63.39% and 63.95% are random-split numbers: they are comparable with the
    original course report and with each other, never with published FER2013
