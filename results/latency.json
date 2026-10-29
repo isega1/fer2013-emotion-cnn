@@ -1,0 +1,50 @@
+{
+  "threads": 1,
+  "runs": 50,
+  "warmup": 10,
+  "batch_size": 1,
+  "models": {
+    "cnn-light": {
+      "checkpoint": "m20-cnn-light_best.pth",
+      "parameters": 939351,
+      "median_ms": 0.62,
+      "p90_ms": 0.71,
+      "runs": 50
+    },
+    "cnn-small": {
+      "checkpoint": "m20-cnn-small_best.pth",
+      "parameters": 1274823,
+      "median_ms": 0.9,
+      "p90_ms": 1.05,
+      "runs": 50
+    },
+    "emotioncnn": {
+      "checkpoint": "m20-emotioncnn_best.pth",
+      "parameters": 10927751,
+      "median_ms": 3.74,
+      "p90_ms": 4.05,
+      "runs": 50
+    },
+    "mlp-small": {
+      "checkpoint": "m20-mlp-small_best.pth",
+      "parameters": 1183751,
+      "median_ms": 0.06,
+      "p90_ms": 0.06,
+      "runs": 50
+    },
+    "mlp-medium": {
+      "checkpoint": "m20-mlp-medium_best.pth",
+      "parameters": 3417095,
+      "median_ms": 0.15,
+      "p90_ms": 0.16,
+      "runs": 50
+    },
+    "mlp-large": {
+      "checkpoint": "m20-mlp-large_best.pth",
+      "parameters": 8931335,
+      "median_ms": 0.74,
+      "p90_ms": 0.82,
+      "runs": 50
+    }
+  }
+}
