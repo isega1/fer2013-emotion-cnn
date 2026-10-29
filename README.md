@@ -42,9 +42,11 @@ legacy ones; chance is 14.3%. Every figure above comes from
 
 The curve is the honest part of the result: validation accuracy is flat from
 about epoch 8 while validation loss climbs from 1.1 to 2.44, so 40 epochs
-buy almost nothing over 10 (63.39% → 63.95% on the legacy split). The
-remaining error is capacity, augmentation and class imbalance, not training
-time.
+buy almost nothing over 10 (63.39% → 63.95% on the legacy split). That
++0.56 pp is itself smaller than the binomial standard error of a single run
+on 3,589 test images (~0.8 pp), so the curve and the rising validation loss
+are the evidence here, not the point estimate. The remaining error is
+capacity, augmentation and class imbalance, not training time.
 
 Per class, official split, 40 epochs:
 
@@ -165,9 +167,10 @@ These are stated up front because they bound what the numbers mean.
    (63.95% for the same protocol) but not the exact weights.
 2. **The legacy split leaks identities.** 63.39% and 63.95% are random-split
    numbers; they are comparable with the original course report and with each
-   other, not with published FER2013 results. Use 63.81% for that. (The
-   measured gap between the two splits is only 0.14 pp, but that is an
-   observation about this model, not a licence to quote the legacy number.)
+   other, not with published FER2013 results. Use 63.81% for that. The two
+   splits differ by 0.14 pp, but the standard error of that difference is
+   ~1 pp (0.80 pp on 3,589 test images, 0.57 pp on 7,178), so this run cannot
+   say how much leakage costs — measuring it needs several seeds per split.
 3. **No augmentation, no class weighting.** The class imbalance is partly
    compensated for in reporting (macro-F1) but not in training, which is why
    `fear` and `sad` sit near 0.5 F1.

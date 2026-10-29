@@ -34,11 +34,15 @@ are not comparable with each other, only within themselves.
 
 - **40 epochs do not beat 10 epochs by much.** Legacy goes 63.39% → 63.95%
   (+0.56 pp) and the validation curve in `results/figures/curves_cnn40-legacy.png`
-  is flat from roughly epoch 8. The gap between the two splits is only 0.14 pp
-  (63.95% legacy vs 63.81% official), so for this model the random-split
-  leakage turns out to be a smaller effect than the difference between
-  architectures — the methodological objection stands, the size of the
-  inflation is simply not dramatic here.
+  is flat from roughly epoch 8. The +0.56 pp is smaller than the binomial
+  standard error of a single run on 3,589 test images (~0.8 pp), so what
+  carries this conclusion is the curve, not the point estimate.
+- **How much the random split costs is unknown, not small.** 63.95% legacy
+  against 63.81% official is a 0.14 pp difference, and the standard error of
+  that difference is ~1 pp (0.80 pp at n=3,589, 0.57 pp at n=7,178) — a
+  single seed cannot separate leakage from noise. That is not evidence that
+  leakage is mild, only that this run does not measure it. The objection to
+  the legacy split stands and 63.81% remains the number to quote.
 - **The model overfits early.** Train loss reaches 0.02 while validation loss
   climbs from 1.1 to 2.44 (`results/figures/curves_cnn40-official.png`): the
   remaining error is not a duration problem, it is capacity plus
@@ -51,6 +55,9 @@ are not comparable with each other, only within themselves.
 
 ## Planned
 
+- Seed sweep: 3–5 seeds per split, so the headline numbers come with a
+  standard deviation. Until then any difference under ~1 pp is not
+  measurable with the runs in this log.
 - Class weighting or focal loss, target: disgust and sad recall (both are at
   ~0.5 F1 and drag macro-F1 down more than their 1.5%–9% share suggests).
 - Horizontal flip / small affine augmentation, evaluated on the official split.
