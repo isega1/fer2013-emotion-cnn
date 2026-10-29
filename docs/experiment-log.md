@@ -45,7 +45,9 @@ are not comparable with each other, only within themselves.
   augmentation plus class imbalance.
 - **Parameter count is nearly free, latency is not.** cnn-light (0.94 M
   params) is within 3 pp of emotioncnn (10.9 M) at 6× less CPU time and 11.6×
-  fewer parameters; MLPs are 5–60× faster than the CNNs and 12–18 pp worse.
+  fewer parameters; the MLPs run in 0.06–0.74 ms — up to 60× faster than the
+  deep CNN — but are 11.5–17 pp worse. The cheap corner of the trade-off is
+  the shallow CNN, not the wide MLP.
 
 ## Planned
 

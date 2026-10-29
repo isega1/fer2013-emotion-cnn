@@ -81,7 +81,7 @@ decay, seed 42, single RTX 5070 Ti. Latency is `src/latency.py`: CPU,
 `emotioncnn` is the "deep" CNN in this table: `src/model.py` registers six
 models and there is no separate `cnn-deep`. The trade-off is worth stating
 plainly — 11.6× the parameters and 6× the CPU time of `cnn-light` buy 2.6 pp
-of accuracy, while every MLP is far faster and 12–18 pp worse.
+of accuracy, while the MLPs run in 0.06–0.74 ms and are 11.5–17 pp worse.
 
 ## CPU latency, PyTorch vs ONNX
 
