@@ -37,12 +37,19 @@ are not comparable with each other, only within themselves.
   is flat from roughly epoch 8. The +0.56 pp is smaller than the binomial
   standard error of a single run on 3,589 test images (~0.8 pp), so what
   carries this conclusion is the curve, not the point estimate.
-- **How much the random split costs is unknown, not small.** 63.95% legacy
-  against 63.81% official is a 0.14 pp difference, and the standard error of
-  that difference is ~1 pp (0.80 pp at n=3,589, 0.57 pp at n=7,178) — a
-  single seed cannot separate leakage from noise. That is not evidence that
-  leakage is mild, only that this run does not measure it. The objection to
-  the legacy split stands and 63.81% remains the number to quote.
+- **How much the random split costs: measured, not argued.** Comparing the
+  two headline runs does not answer this — 63.95% legacy against 63.81%
+  official is 0.14 pp against a ~1 pp standard error (0.80 pp at n=3,589,
+  0.57 pp at n=7,178), so a single seed cannot separate leakage from noise.
+  Scoring *across* splits does answer it: `model_epoch_10.pth`, trained only
+  on the legacy split, reaches **84.24% macro-F1 0.8361 on the official test
+  set** — because **5,931 of those 7,178 rows (82.6%) were in its training
+  data** (`results/leakage_demo.json`, re-checked on a second machine).
+  The same weights score 63.39% on the split they were honestly held out
+  from. So the leak is real and enormous; it is simply invisible to a
+  legacy-vs-official *accuracy* comparison, which is why that comparison was
+  the wrong instrument. 63.81% (official, trained on Training rows only)
+  remains the number to quote; 84.24% is a negative control, not a result.
 - **The model overfits early.** Train loss reaches 0.02 while validation loss
   climbs from 1.1 to 2.44 (`results/figures/curves_cnn40-official.png`): the
   remaining error is not a duration problem, it is capacity plus
@@ -61,8 +68,9 @@ are not comparable with each other, only within themselves.
 - Class weighting or focal loss, target: disgust and sad recall (both are at
   ~0.5 F1 and drag macro-F1 down more than their 1.5%–9% share suggests).
 - Horizontal flip / small affine augmentation, evaluated on the official split.
-- Publish the two original checkpoints (release asset or Git LFS): without
-  them `scripts/reproduce_published.sh` cannot be run by anyone else, which
-  undercuts the "every number recomputable" claim.
+- Publish the four checkpoints as release assets (`v1.0-checkpoints`):
+  `cnn40-official_best`, `cnn40-legacy_best`, `model_epoch_10`,
+  `model_epoch_5`. Without them `scripts/reproduce_published.sh` cannot
+  recompute any row, which undercuts the "every number recomputable" claim.
 - If a genuinely deeper CNN is wanted, it has to be written —
   `src/model.py` has six registered models and `cnn-deep` is not one of them.

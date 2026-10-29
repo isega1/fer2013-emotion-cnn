@@ -160,17 +160,23 @@ docs/               experiment log, handoff notes
 
 These are stated up front because they bound what the numbers mean.
 
-1. **The shipped checkpoints are not in the repository.** `checkpoints/` is
-   gitignored, including `model_epoch_5.pth` and `model_epoch_10.pth`, so
-   `scripts/reproduce_published.sh` — and the 63.39% row — cannot be rerun
-   from a fresh clone. Retraining from scratch reproduces the ballpark
-   (63.95% for the same protocol) but not the exact weights.
-2. **The legacy split leaks identities.** 63.39% and 63.95% are random-split
-   numbers; they are comparable with the original course report and with each
-   other, not with published FER2013 results. Use 63.81% for that. The two
-   splits differ by 0.14 pp, but the standard error of that difference is
-   ~1 pp (0.80 pp on 3,589 test images, 0.57 pp on 7,178), so this run cannot
-   say how much leakage costs — measuring it needs several seeds per split.
+1. **The checkpoints ship as release assets, not in the repository.**
+   `checkpoints/` is gitignored, so a fresh clone has no weights until
+   `gh release download v1.0-checkpoints -D checkpoints` is run. All four are
+   published: `cnn40-official_best.pth` (63.81%), `cnn40-legacy_best.pth`
+   (63.95%), `model_epoch_10.pth` (63.39%), `model_epoch_5.pth` (59.43%).
+   `scripts/reproduce_published.sh` recomputes every row in the results table
+   and skips — with a message, not an error — any asset that is missing.
+2. **The legacy split leaks identities, and here is the size of it.**
+   63.39% and 63.95% are random-split numbers: they are comparable with the
+   original course report and with each other, never with published FER2013
+   results. Use 63.81% for that. Comparing the two runs does not measure the
+   leak (0.14 pp against a ~1 pp standard error), but scoring across splits
+   does: `model_epoch_10.pth`, trained on the legacy split, reaches **84.24%**
+   on the official test set because **82.6% of those rows were in its training
+   data** (`results/leakage_demo.json`). That 84.24% is a negative control
+   showing what an un-policed leak looks like — it is not a result, and it
+   appears in no table above.
 3. **No augmentation, no class weighting.** The class imbalance is partly
    compensated for in reporting (macro-F1) but not in training, which is why
    `fear` and `sad` sit near 0.5 F1.

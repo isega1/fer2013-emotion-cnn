@@ -1,0 +1,14 @@
+{
+  "what": "Negative control: legacy-trained checkpoint scored on the official test set",
+  "not_a_result": true,
+  "checkpoint": "checkpoints/model_epoch_10.pth",
+  "trained_on": "data/fer2013/train.csv (legacy random 90% split of all 35,887 rows)",
+  "evaluated_on": "data/fer2013_official/test.csv (PublicTest + PrivateTest)",
+  "n": 7178,
+  "accuracy": 0.8424,
+  "macro_f1": 0.8361,
+  "test_rows_present_in_legacy_training": 5931,
+  "share_of_test_seen_in_training": 0.826,
+  "why_it_is_high": "82.6% of these test rows were in the legacy training set; the number measures memorisation, not generalisation.",
+  "contrast": "The same weights score 63.39% on the legacy held-out split (results/metrics_epoch10_recheck.json)."
+}
