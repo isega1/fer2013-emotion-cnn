@@ -105,6 +105,11 @@ runtimes on the same batch and fails unless the logits agree within 1e-5
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 
+# Blackwell (RTX 50xx) needs the cu128 wheels, otherwise torch fails at the
+# first kernel launch with "no kernel image is available":
+#   pip install torch --index-url https://download.pytorch.org/whl/cu128
+# Any other GPU/CPU works with the plain requirements.txt.
+
 # data (not in this repo): FER2013 CSV from Kaggle, one file
 #   data/fer2013/fer2013.csv
 # Either column order works ("emotion,pixels,Usage" or "emotion, Usage, pixels").
