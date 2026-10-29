@@ -10,6 +10,7 @@ rows from the shipped checkpoints; `scripts/run_all.sh` produces new ones.
 | 2026-10-29 | reproduction | same checkpoints, `src/evaluate.py` | 63.39% | 0.6046 | matches the 2025 numbers exactly; `src/split.py --mode legacy` reproduces the shipped test rows (same 3,589 rows, same order, LF vs CRLF only) |
 | 2026-10-29 | ONNX export | opset 17, batch dynamic | 63.39% | 0.6046 | parity with PyTorch: max |Δlogit| = 5.2e-06 |
 | 2026-10-29 | benchmark | 1 thread, 50 runs | — | — | 1.07 ms vs 1.71 ms per image (1.60×) |
+| 2026-10-29 | CPU run, aborted | Adam 1e-3, batch 128, 8 threads, legacy | — | — | stopped at epoch 4 (val 59.10%) after 81 s/epoch; machine moved to a CUDA box, see `results/train_emotioncnn40.log` |
 
 ## Planned
 
