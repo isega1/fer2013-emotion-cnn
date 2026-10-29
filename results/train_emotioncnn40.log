@@ -1,0 +1,6 @@
+model=emotioncnn params=10,927,751 device=cpu
+train=29068 val=3230
+epoch   1/40  train_loss 1.6205  val_loss 1.4642  val_acc 0.4378  (76.5s)
+epoch   2/40  train_loss 1.3208  val_loss 1.2469  val_acc 0.5241  (77.8s)
+epoch   3/40  train_loss 1.1888  val_loss 1.1309  val_acc 0.5796  (80.8s)
+epoch   4/40  train_loss 1.0878  val_loss 1.0757  val_acc 0.5910  (87.8s)

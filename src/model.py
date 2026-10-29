@@ -2,7 +2,9 @@
 
 ``EmotionCNN`` is reproduced from the original coursework code so that the
 checkpoints trained in 2025 (``model_epoch_5.pth`` / ``model_epoch_10.pth``)
-load without any key renaming. Parameter count: 10,929,163.
+load without any key renaming. Parameter count: 10,927,751
+(10,929,163 tensors in the state_dict; the 1,412 difference is BatchNorm
+running statistics and `num_batches_tracked`, which are buffers, not weights).
 
 The variants are the "6 models" family from the earlier report
 (CNN-Light/Standard/Deep, MLP-Small/Medium/Large); they are registered here

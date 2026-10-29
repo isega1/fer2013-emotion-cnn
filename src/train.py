@@ -61,6 +61,7 @@ def main() -> None:
     parser.add_argument("--weight-decay", type=float, default=0.0)
     parser.add_argument("--scheduler", choices=["none", "cosine"], default="cosine")
     parser.add_argument("--device", default="auto")
+    parser.add_argument("--threads", type=int, default=0, help="torch CPU threads, 0 = library default")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--tag", default="run")
     parser.add_argument("--checkpoint-dir", type=Path, default=ROOT / "checkpoints")
@@ -68,6 +69,8 @@ def main() -> None:
     args = parser.parse_args()
 
     torch.manual_seed(args.seed)
+    if args.threads:
+        torch.set_num_threads(args.threads)
     device = pick_device(args.device)
     model = build_model(args.model).to(device)
     print(f"model={args.model} params={count_parameters(model):,} device={device}")

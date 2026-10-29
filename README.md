@@ -8,6 +8,12 @@ January 2025. This repository adds the parts the course project skipped —
 a reproducible evaluation, a proper ONNX export with numerical verification,
 and a CPU latency benchmark.
 
+## Status and handoff
+
+- `docs/HANDOFF.md` — what is done, what is missing, environment, known pitfalls.
+- `NEXT_SESSION_PROMPT.md` — prompt to hand this repository to another machine/agent.
+- `docs/experiment-log.md` — one row per run.
+
 ## Results
 
 Evaluation on the 3,589-image held-out split (`data/fer2013/test.csv`),
@@ -72,7 +78,7 @@ EPOCHS=40 ./scripts/run_all.sh
 
 ```
 src/dataset.py      CSV -> (N, 48, 48) uint8 -> tensor in [-1, 1]
-src/model.py        EmotionCNN (10,929,163 parameters) + lighter variants
+src/model.py        EmotionCNN (10.93M parameters) + lighter variants
 src/split.py        legacy random split or the official Usage-based split
 src/train.py        training loop with per-epoch validation accuracy
 src/evaluate.py     accuracy, macro-F1, per-class metrics, confusion matrix
