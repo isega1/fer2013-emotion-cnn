@@ -28,6 +28,9 @@ def load_pixels(df: pd.DataFrame) -> np.ndarray:
 class FER2013Dataset(Dataset):
     def __init__(self, csv_file: str, cache: bool = True):
         df = pd.read_csv(csv_file)
+        # Some mirrors write the header as "emotion, Usage, pixels"; strip the
+        # stray spaces so both variants resolve to the same column names.
+        df.columns = [c.strip() for c in df.columns]
         self.labels = df["emotion"].to_numpy(dtype=np.int64)
         self.images = load_pixels(df) if cache else df["pixels"].tolist()
         self.cache = cache

@@ -5,7 +5,7 @@ Two modes:
 ``legacy``
     What the 2025 coursework did: a random 90/10 split, then a second 90/10
     split of the remainder, both with ``random_state=42`` and no stratification.
-    This yields 29,069 / 3,231 / 3,590 rows. It is kept so the published
+    This yields 29,068 / 3,230 / 3,589 rows. It is kept so the published
     numbers can be reproduced, but it is **not** a fair held-out evaluation:
     FER2013 rows are not i.i.d. and the official test set is unused.
 
@@ -47,6 +47,10 @@ def main() -> None:
     args = parser.parse_args()
 
     df = pd.read_csv(DATA / "fer2013.csv")
+    # Mirrors of the Kaggle file do not agree on the header: some write
+    # "emotion, Usage, pixels" (space after the comma). Normalise the names so
+    # either variant loads; the rows themselves are untouched.
+    df.columns = [c.strip() for c in df.columns]
     print(f"fer2013.csv: {len(df)} rows, usage={df['Usage'].value_counts().to_dict()}")
 
     train, val, test = (legacy if args.mode == "legacy" else official)(df)

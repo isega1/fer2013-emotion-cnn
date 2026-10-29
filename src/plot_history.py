@@ -21,6 +21,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("history", type=Path)
     parser.add_argument("--out", type=Path, default=None)
+    parser.add_argument("--baseline", type=float, default=24.55,
+                        help="majority-class accuracy to draw (24.55 legacy, 24.71 official)")
     args = parser.parse_args()
 
     data = json.loads(args.history.read_text())
@@ -36,7 +38,7 @@ def main() -> None:
     ax_loss.legend(frameon=False)
 
     ax_acc.plot(epochs, [r["val_acc"] * 100 for r in rows], color="tab:green")
-    ax_acc.axhline(24.55, ls="--", lw=1, color="grey", label="majority baseline")
+    ax_acc.axhline(args.baseline, ls="--", lw=1, color="grey", label="majority baseline")
     ax_acc.set_xlabel("epoch")
     ax_acc.set_ylabel("validation accuracy (%)")
     ax_acc.set_title(f"validation accuracy (best {data['best_val_acc']:.1%})")

@@ -122,7 +122,13 @@ def main() -> None:
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
     history_path = args.out_dir / f"history_{args.tag}.json"
-    history_path.write_text(json.dumps({"args": vars(args) | {"data_dir": str(args.data_dir)},
+    # ``vars(args)`` holds ``Path`` objects for data_dir/checkpoint_dir/out_dir,
+    # which json cannot encode; stringify every non-primitive value.
+    args_dump = {
+        key: str(value) if isinstance(value, Path) else value
+        for key, value in vars(args).items()
+    }
+    history_path.write_text(json.dumps({"args": args_dump,
                                         "best_val_acc": best_acc, "history": history}, indent=2))
     print(f"best val_acc {best_acc:.4f}  history -> {history_path}")
 
